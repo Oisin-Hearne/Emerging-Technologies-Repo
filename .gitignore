@@ -11,7 +11,3 @@
 # Built Visual Studio Code Extensions
 *.vsix
 .ipynb_checkpoints/trigrams-checkpoint.ipynb
-
-# Don't reupload the texts.
-texts/*
-words.txt
