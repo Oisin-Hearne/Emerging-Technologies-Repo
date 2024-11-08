@@ -90,19 +90,19 @@ const elizaPatterns = {
       "I hear your frustration. What's been bothering you?"
     ],
 
-    "(.*) mother|father|family|parent(.*)": [
+    "(.*)mother|father|family|parent(.*)": [
         "Tell me more about your family.",
         "How does that make you feel about your family?",
         "What role does your family play in your thoughts?"
     ],
 
-    "(.*) I need (.*)": [
+    "(.*)I need (.*)": [
         "Why do you need {1}?",
         "Would getting {1} really help you?",
         "What if you didn't need {1}?"
     ], 
 
-    "(.*) I am (.*)": [
+    "(.*)I am (.*)": [
         "Why do you think you are {1}?",
         "How long have you felt that way?",
         "What made you feel like {1}?"
@@ -143,12 +143,14 @@ function generateResponses(input) {
 
     Object.entries(elizaPatterns).forEach(pattern => {
 
-        regpattern = new RegExp(pattern, "gi") //[5]
+        regpattern = new RegExp(pattern[0], "gi") //[5]
+        console.log(regpattern)
         match = sanitizedInput.match(regpattern)
         console.log(match)
 
         if(match) {
-            response = pattern[1][Math.floor(Math.random()*pattern[1].length)];
+            response = pattern[1][Math.floor(Math.random()*pattern[1].length)]; //[6]
+            console.log(match.groups)
         }
     });
 }
