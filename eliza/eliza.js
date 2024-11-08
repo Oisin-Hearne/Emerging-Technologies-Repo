@@ -1,4 +1,4 @@
-
+testString = "I am eating an orange."
 
 // This function takes in a string, and using the "reflect" dict, switches the context of it.
 // For example, "I like you" becomes "You like me".
@@ -35,8 +35,6 @@ function reflectString(text) {
     
     return reflectedWords;
 }
-
-console.log(reflectString("I am eating an orange. What are you doing?"))
 
 // This is an Object containing several responses for ELIZA to use.
 /* NOTE: This was generated from ChatGPT, with the following prompts:
@@ -133,16 +131,35 @@ const elizaPatterns = {
       "I'm having trouble understanding. Could you rephrase that for me?",
       "I'm a little confused. Could you give me more context?"
     ]
-  };
+};
 
+// This function uses the patterns and reflect function to generate a response, searching for a match
+// in the patterns to make it seem as though the chatbot is listening to the user.
+// This is adapated from the python code in [1].
+function generateResponses(input) {
+    //Remove only periods and commas, apostrophes and other special characters can stay, but sentence structures
+    //can mess with detected words.
+    sanitizedInput = input.replaceAll(/[.,]/g, "");
 
+    Object.entries(elizaPatterns).forEach(pattern => {
 
+        regpattern = new RegExp(pattern, "gi") //[5]
+        match = sanitizedInput.match(regpattern)
+        console.log(match)
+
+        if(match) {
+            response = pattern[1][Math.floor(Math.random()*pattern[1].length)];
+        }
+    });
+}
+
+generateResponses("I need a dollar.")
 
 /* References:
  [1] Eliza Notes                  https://github.com/ianmcloughlin/2425_emerging_technologies/blob/main/03_eliza.ipynb
  [2] JavaScript String Methods    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#instance_methods
  [3] JavaScript Objects           https://www.w3schools.com/js/js_objects.asp
- [4]
- [5]
-
+ [4] Regex in Javascript          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions
+ [5] String to RegExp             https://stackoverflow.com/a/874722
+ [6] Randomly select from Array   https://stackoverflow.com/a/5915122
  */
