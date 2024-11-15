@@ -16,6 +16,8 @@ reflect = {
     "i'm": "you're",
     "i'd": "you'd",
     "i've": "you've",
+    "myself": "yourself",
+    "yourself": "myself",
 }
 
 function reflectString(text) {
@@ -33,7 +35,7 @@ function reflectString(text) {
         }
     });
     
-    return reflectedWords;
+    return reflectedWords.trim();
 }
 
 // This is an Object containing several responses for ELIZA to use.
@@ -105,7 +107,7 @@ const elizaPatterns = {
     "(.*)I am (.*)": [
         "Why do you think you are {1}?",
         "How long have you felt that way?",
-        "What made you feel like {1}?"
+        "What made you feel like you're {1}?"
     ],
   
     // Offering advice
@@ -116,16 +118,12 @@ const elizaPatterns = {
       "Taking small steps towards solving the problem might help. What small step could you take today?"
     ],
   
-    // General reflection and affirmation
+    // Resort to this if no other pattern matches.
     "(.*)": [
       "Tell me more about that.",
       "I see. What else is on your mind?",
       "What do you think is the most important thing here?",
-      "I'm curious—what else are you thinking?"
-    ],
-  
-    // Misunderstanding or asking for clarification
-    "huh|what|eh": [
+      "I'm curious—what else are you thinking?",
       "Sorry, I'm not sure I follow. Could you clarify?",
       "I didn't quite get that. Can you explain it again?",
       "I'm having trouble understanding. Could you rephrase that for me?",
@@ -144,18 +142,23 @@ function generateResponses(input) {
     Object.entries(elizaPatterns).forEach(pattern => {
 
         regpattern = new RegExp(pattern[0], "gi") //[5]
-        console.log(regpattern)
         match = sanitizedInput.match(regpattern)
-        console.log(match)
+        parts = regpattern.exec(sanitizedInput)
 
+        // If a match is found, generate a response randomly from the group.
+        //If applicable, insert a reflected string from the user input. This is for cases with "I need" and "I am".
         if(match) {
             response = pattern[1][Math.floor(Math.random()*pattern[1].length)]; //[6]
-            console.log(match.groups)
+            if(parts[2]) {
+              response = response.replace("{1}", reflectString(parts[2]))
+            }
+
+            return(response)
         }
     });
 }
 
-generateResponses("I need a dollar.")
+generateResponses("I need to run a marathon by myself.")
 
 /* References:
  [1] Eliza Notes                  https://github.com/ianmcloughlin/2425_emerging_technologies/blob/main/03_eliza.ipynb
