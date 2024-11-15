@@ -138,6 +138,7 @@ function generateResponses(input) {
     //Remove only periods and commas, apostrophes and other special characters can stay, but sentence structures
     //can mess with detected words.
     sanitizedInput = input.replaceAll(/[.,]/g, "");
+    responses = []
 
     Object.entries(elizaPatterns).forEach(pattern => {
 
@@ -153,12 +154,15 @@ function generateResponses(input) {
               response = response.replace("{1}", reflectString(parts[2]))
             }
 
-            return(response)
+            responses.push(response)
         }
     });
+
+    return responses
 }
 
-generateResponses("I need to run a marathon by myself.")
+text = generateResponses("I need to run a marathon by myself.")
+console.log(text[0]);
 
 /* References:
  [1] Eliza Notes                  https://github.com/ianmcloughlin/2425_emerging_technologies/blob/main/03_eliza.ipynb
