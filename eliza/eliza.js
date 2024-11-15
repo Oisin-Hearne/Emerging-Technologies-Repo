@@ -161,34 +161,35 @@ function generateResponses(input) {
     return responses
 }
 
-
-
 // This code is for interacting with the HTML interface and was heavily adapted from a script provided by
 // ChatGPT in the same prompt. The code provided was largely static, so it was adapted to use these methods.
 
-document.getElementById("sendButton").addEventListener("click", sendMessage)
+document.getElementById("sendButton").addEventListener("click", sendMessage) //Using eventlistener because onclick was being stubborn.
 
 function sendMessage() {
   userInput = document.getElementById("userInput").value.trim()
   chatBox = document.getElementById("chatWindow")
   
+  //Creates a new div for the user/bot messages and appends it to the chatbox.
   if(userInput) {
     //Add User Message
     message = document.createElement("div");
     message.textContent = userInput;
-    message.className = "user-message"
+    message.className = "message user-message"
     chatBox.appendChild(message)
     chatBox.scrollTop = chatBox.scrollHeight
 
-
     //Add Bot Message
+    message = document.createElement("div");
+    message.textContent = generateResponses(userInput)[0]
+    message.className = "message bot-message"
+    chatBox.appendChild(message)
+    chatBox.scrollTop = chatBox.scrollHeight
   }
 
   document.getElementById("userInput").value = "";
 }
 
-text = generateResponses("I need to run a marathon by myself.")
-console.log(text[0]);
 
 /* References:
  [1] Eliza Notes                  https://github.com/ianmcloughlin/2425_emerging_technologies/blob/main/03_eliza.ipynb
