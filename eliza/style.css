@@ -11,8 +11,8 @@ body {
 }
 
 .chat-container {
-    width: 400px;
-    max-width: 90%;
+    width: 90%;
+    height: 80%;
     background: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -62,18 +62,26 @@ body {
 }
 
 .message {
-    margin: 10px 0;
+    margin: 10px 0px;
     padding: 10px;
     border-radius: 5px;
-    max-width: 70%;
+    display: inline-block;
 }
 
 .bot-message {
     background: #f4e1f5;
     align-self: flex-start;
+    float: left;
+    clear: both;
+    max-width: 50%;
+    overflow-wrap: anywhere;
 }
 
 .user-message {
     background: #d1e7ff;
     align-self: flex-end;
+    float: right;
+    clear:both;
+    max-width: 50%;
+    overflow-wrap: anywhere;
 }

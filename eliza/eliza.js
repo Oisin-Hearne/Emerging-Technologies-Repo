@@ -175,20 +175,28 @@ function sendMessage() {
     //Add User Message
     message = document.createElement("div");
     message.textContent = userInput;
-    message.className = "message user-message"
+    message.className = "user-message message"
     chatBox.appendChild(message)
     chatBox.scrollTop = chatBox.scrollHeight
 
     //Add Bot Message
     message = document.createElement("div");
     message.textContent = generateResponses(userInput)[0]
-    message.className = "message bot-message"
+    message.className = "bot-message message"
     chatBox.appendChild(message)
     chatBox.scrollTop = chatBox.scrollHeight
   }
 
   document.getElementById("userInput").value = "";
 }
+
+//Eventlistener for detecting if the user presses the enter key in the userInput box. If they do, send the message.
+var enter = document.getElementById("userInput");
+enter.addEventListener("keydown", function (e) { // [7]
+  if (e.code === "Enter") {
+    sendMessage()
+  }
+});
 
 
 /* References:
@@ -198,4 +206,5 @@ function sendMessage() {
  [4] Regex in Javascript          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions
  [5] String to RegExp             https://stackoverflow.com/a/874722
  [6] Randomly select from Array   https://stackoverflow.com/a/5915122
+ [7] Eventlisteners in Javascript https://stackoverflow.com/a/16011365
  */
